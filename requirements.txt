@@ -1,0 +1,9 @@
+# Install PyTorch first (CUDA 12.8 build, needed for RTX 50-series):
+#   python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+ultralytics
+opencv-python
+streamlit
+pandas
+pillow
+pytest
+lap  # used by the ByteTrack worker tracker for video

@@ -1,0 +1,19 @@
+{
+  "_read_me": "Starter values for construction trades. Which equipment each trade must wear is for your safety officer to confirm against the rules that apply to your site. Edit this file; nothing is hard-coded. Allowed items: helmet, vest, goggles, gloves, boots. 'also_needs' is text for equipment SiteGuard cannot check yet.",
+  "roles": {
+    "general_worker": {"label": "General labourer / helper", "required": ["helmet", "vest", "boots"], "tools": ["shovel", "wheelbarrow", "hand tools"], "also_needs": [], "standards": []},
+    "mason": {"label": "Mason / concrete worker", "required": ["helmet", "vest", "gloves", "boots"], "tools": ["trowel", "concrete mixer", "bricks"], "also_needs": [], "standards": []},
+    "carpenter": {"label": "Carpenter / formwork", "required": ["helmet", "vest", "gloves", "goggles"], "tools": ["saw", "hammer", "nail gun"], "also_needs": [], "standards": []},
+    "scaffolder": {"label": "Scaffolder / work at height", "required": ["helmet", "vest", "boots"], "tools": ["scaffold tubes", "spanner"], "also_needs": ["safety harness (cannot be checked yet)"], "standards": []},
+    "electrician": {"label": "Electrician", "required": ["helmet", "gloves", "boots"], "tools": ["cutters", "drill", "test meter"], "also_needs": ["insulated gloves rating (not checkable)"], "standards": []},
+    "welder": {"label": "Welder", "required": ["helmet", "goggles", "gloves", "boots"], "tools": ["welding set", "grinder"], "also_needs": ["welding shield, fire-resistant clothing (cannot be checked yet)"], "standards": []},
+    "grinder": {"label": "Grinding / cutting", "required": ["helmet", "goggles", "gloves", "boots"], "tools": ["angle grinder", "cutting saw", "drill"], "also_needs": ["ear protection, dust mask (cannot be checked yet)"], "standards": []},
+    "site_supervisor": {"label": "Site supervisor (held to the same rules)", "required": ["helmet", "vest", "boots"], "tools": [], "also_needs": [], "standards": []},
+    "visitor": {"label": "Visitor", "required": ["helmet", "vest"], "tools": [], "also_needs": [], "standards": []}
+  },
+  "references_to_check": [
+    "Building and Other Construction Workers (Regulation of Employment and Conditions of Service) Act, 1996 and the Central Rules, 1998",
+    "Occupational Safety, Health and Working Conditions Code, 2020 (check its current commencement status)",
+    "BIS standards for protective equipment, for example IS 2925 (industrial safety helmets) and the IS 15298 series (personal protective equipment): confirm the exact numbers and editions with your safety officer"
+  ]
+}

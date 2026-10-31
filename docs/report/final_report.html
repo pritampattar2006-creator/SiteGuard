@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SiteGuard: final project report (Team HF27-0030)</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 18mm; }
+  * { box-sizing: border-box; }
+  body { font: 10.5pt/1.5 "Segoe UI", Arial, sans-serif; color: #17202b; margin: 0; }
+  h1 { font-size: 24pt; margin: 0 0 2pt; letter-spacing: -.01em; }
+  h2 { font-size: 14pt; margin: 20pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid #1d4ed8; break-after: avoid; }
+  h3 { font-size: 11pt; margin: 12pt 0 3pt; break-after: avoid; }
+  p { margin: 0 0 6pt; } ul { margin: 0 0 6pt; padding-left: 16pt; } li { margin-bottom: 2pt; }
+  .sub { color: #586374; font-size: 11pt; }
+  .meta { color: #586374; font-size: 9.5pt; margin-top: 6pt; }
+  table { width: 100%; border-collapse: collapse; margin: 6pt 0 10pt; font-size: 9.5pt; break-inside: avoid; }
+  th { background: #f1f3f6; text-align: left; padding: 4pt 6pt; border: 1px solid #d5dae1; }
+  td { padding: 4pt 6pt; border: 1px solid #d5dae1; vertical-align: top; }
+  .ok { color: #138a52; font-weight: 600; } .part { color: #b86e00; font-weight: 600; } .no { color: #d23b3b; font-weight: 600; }
+  .note { background: #fff7e0; border-left: 4px solid #e0a000; padding: 6pt 9pt; margin: 8pt 0; break-inside: avoid; }
+  .flow { display: flex; align-items: stretch; gap: 6pt; margin: 8pt 0; break-inside: avoid; }
+  .box { flex: 1; border: 1.5px solid #1d4ed8; border-radius: 6pt; padding: 6pt 7pt; background: #f4f7ff; font-size: 9pt; }
+  .box b { display: block; font-size: 9.5pt; margin-bottom: 2pt; } .arrow { align-self: center; font-size: 14pt; color: #1d4ed8; }
+  .qa h3 { color: #1d4ed8; } .small { font-size: 9pt; color: #586374; }
+  code { font: 9pt Consolas, monospace; background: #f1f3f6; padding: 1pt 3pt; border-radius: 3pt; }
+  .cover { padding: 18pt 0 10pt; border-bottom: 4px solid #1d4ed8; margin-bottom: 8pt; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>SiteGuard</h1>
+  <div class="sub">PPE compliance detection for construction sites: final project report</div>
+  <div class="meta">Team HF27-0030 &nbsp;|&nbsp; KLS Vishwanathrao Deshpande Institute of Technology, Haliyal &nbsp;|&nbsp; CSE and CSE (AI &amp; ML) &nbsp;|&nbsp; Theme: Computer Vision &nbsp;|&nbsp; Problem Statement 1</div>
+</div>
+
+<h2>1. What it does</h2>
+<p>SiteGuard looks at a photo, a video or a live camera, finds every worker, decides for <b>each worker separately</b> whether they wear the required equipment, and says exactly what is missing. A helmet anywhere in the picture never makes everyone compliant. When it is not sure, it says "needs review" instead of accusing anyone. Anyone who broke a rule is sent to a supervisor with the picture, the place, the time and an auto-written remark; the employee sees it in their own feed; and a person decides before anything counts as a violation or a penalty.</p>
+
+<h3>Problem statement requirements</h3>
+<table>
+  <tr><th style="width:38%">Requirement</th><th>How it is met</th><th style="width:11%">Status</th></tr>
+  <tr><td>Detect each worker</td><td>YOLO11 person detector, plus zoomed tiles for small or distant workers.</td><td class="ok">Met</td></tr>
+  <tr><td>Decide per worker whether the required PPE is worn</td><td>Each helmet and vest is assigned to exactly one worker by position (head zone, torso zone), so one helmet in the picture cannot cover everyone.</td><td class="ok">Met</td></tr>
+  <tr><td>Flag violations and the missing item</td><td>Verdicts COMPLIANT, VIOLATION (with the missing item) or NEEDS REVIEW.</td><td class="ok">Met</td></tr>
+  <tr><td>Annotated images with a verdict per worker</td><td>Boxes and labels on every picture, in the demo desk and in each case.</td><td class="ok">Met</td></tr>
+  <tr><td>Violation summary</td><td>Supervisor overview, cases table, employee pages, PDF reports.</td><td class="ok">Met</td></tr>
+  <tr><td>Multiple workers, occlusion, distance, poor lighting</td><td>Zoomed tiles, dark-photo enhancement, weak-evidence rule, edge-cut checks. Hard cases still fail sometimes (section 5).</td><td class="part">Met, with limits</td></tr>
+</table>
+
+<h2>2. Architecture</h2>
+<div class="flow">
+  <div class="box"><b>Input</b>Photo, video or live camera on the demo desk (port 3003).</div><div class="arrow">&rarr;</div>
+  <div class="box"><b>Detector service (Python, port 5000)</b>People, helmets, vests, heads. Object check. Per-worker rules. Second-model cross-check. Naming.</div><div class="arrow">&rarr;</div>
+  <div class="box"><b>API (Node, port 4000)</b>Cases, one violation per person per day, remarks, penalties, salary, alerts.</div><div class="arrow">&rarr;</div>
+  <div class="box"><b>Two portals</b>Supervisor panel (3002). Employee portal (3001).</div>
+</div>
+<table>
+  <tr><th>Part</th><th>Technology</th><th>Job</th></tr>
+  <tr><td>Detector</td><td>Python 3.12, Ultralytics YOLO11, PyTorch, OpenCV</td><td>Finds people and gear, applies the per-worker rules, tracks people in video.</td></tr>
+  <tr><td>Object check</td><td>YOLO11 pose model and the COCO person detector</td><td>A box that holds no body (for example a concrete bucket on a crane) is marked "OBJECT: not a worker" and never flagged.</td></tr>
+  <tr><td>Cross-check</td><td>Second YOLO model (extras.pt)</td><td>If it sees a helmet on someone the main model says has none, the call is held back for review.</td></tr>
+  <tr><td>Naming people</td><td>OpenCV YuNet (faces) and SFace (recognition)</td><td>Face first; then a strict dress-colour match; otherwise a made-up name tied to that footage.</td></tr>
+  <tr><td>API and database</td><td>Node.js, Express, NeDB (MongoDB-style, embedded)</td><td>System of record; swappable for MongoDB by changing one file.</td></tr>
+  <tr><td>Websites</td><td>React (Vite), three separate sites</td><td>Supervisor panel, employee portal, demo desk with spoken alerts (browser speech).</td></tr>
+</table>
+
+<h3>How one catch flows</h3>
+<ul>
+  <li>The demo desk sends the picture or video to the detector. Everyone is checked; "no helmet" calls are cross-checked.</li>
+  <li>Each person who broke a rule gets a name: an enrolled employee if their face is known, otherwise a made-up name that is the same every time for the same footage. Only those people are spoken to, at most once every 10 minutes.</li>
+  <li>The case goes to the supervisor automatically with its picture and a remark written from the facts (who, what, where, when, how many times, earlier violations). The supervisor can edit the remark.</li>
+  <li>The employee sees it at once in their personal feed (date, time, place, how it was caught). It becomes a violation only when the supervisor confirms it.</li>
+  <li><b>One violation per person per day.</b> Caught again the same day: only the catch count goes up. The next day: a new violation. Three confirmed violations in 30 days propose a penalty, which a supervisor must approve and the employee can dispute.</li>
+</ul>
+
+<h2>3. Data, models and licences</h2>
+<table>
+  <tr><th>Item</th><th>Source</th><th>Licence</th></tr>
+  <tr><td>Training photos</td><td>Construction-PPE (Ultralytics), 1,416 photos; CHVG (Ferdous and Ahsan 2022), 1,699 photos</td><td>AGPL-3.0; CC BY 4.0</td></tr>
+  <tr><td>Detection model</td><td>YOLO11 (Ultralytics), fine-tuned by us to person, helmet, vest and head</td><td>AGPL-3.0</td></tr>
+  <tr><td>Face models</td><td>OpenCV YuNet and SFace (OpenCV Zoo)</td><td>MIT; Apache-2.0</td></tr>
+  <tr><td>Fall classifier (experimental)</td><td>GMDCSA24 dataset, 160 clips</td><td>MIT</td></tr>
+</table>
+<p class="small">Credits and licence notices are kept in the README and docs/LICENSES_AND_SOURCES.md and are not removed. Nothing was copied from other projects; other repositories were read for ideas only.</p>
+
+<h2>4. Measured accuracy</h2>
+<div class="note"><b>We do not claim 99.99%.</b> No detection system can honestly promise that. These are the numbers measured on photos the model never saw, with scripts that can be re-run (<code>scripts/compare_models.py</code>, <code>scripts/eval_workers.py</code>, <code>scripts/eval_crosscheck.py</code>). Full detail: <code>docs/ACCURACY_MEASURED.md</code>.</div>
+<table>
+  <tr><th>What</th><th>Result</th></tr>
+  <tr><td>Detection score on 314 held-out photos (AP at IoU 0.5)</td><td>person 0.925, helmet 0.941, vest 0.901, head 0.736; <b>mean 0.876</b></td></tr>
+  <tr><td>"No helmet" verdicts on 661 labelled workers (60 px or taller)</td><td>caught 78, false alarms 7, missed 4 (14 more sent to review): <b>precision 0.918</b>, <b>recall 0.812</b> (0.958 counting "send to review")</td></tr>
+  <tr><td>Dark photos (darkened copies of the test photos)</td><td>night model: "no helmet" precision <b>0.890</b> (original model alone 0.647); 18.9% of workers not found</td></tr>
+  <tr><td>Missing vest (101 photos, 78 workers without one)</td><td>54 caught automatically (69%), 17 more sent to review; 6 of 89 vest-wearers wrongly flagged</td></tr>
+  <tr><td>Workers the detector never found</td><td>85 of 661 (12.9%)</td></tr>
+  <tr><td>Vest false alarms on people who do wear one</td><td>14 of 312 (4.5%)</td></tr>
+  <tr><td>Second-model cross-check on helmet calls</td><td>held back 0 of 88 real violations, caught 2 of 6 false alarms (a small sample)</td></tr>
+  <tr><td>Same person by face (160 clips, 4 people)</td><td>no two people merged; 64 of 64 named observations correct; each person ended up with 1 or 2 names; about 20% of faces left unnamed rather than guessed</td></tr>
+  <tr><td>Same person by clothes</td><td>weak: at a setting that wrongly links people 0.14% of the time, only 4% of same-person pairs are recognised; used only for the same footage seen again</td></tr>
+  <tr><td>Tried and rejected</td><td>a larger model (0.819, lower), threshold tuning, test-time augmentation (lower), an appearance-based tracker (no gain)</td></tr>
+  <tr><td>Fall alerts (experimental, off by default)</td><td>per clip: 53% of falls caught (24% in low light), false alarm on 7% of normal clips; weak</td></tr>
+</table>
+
+<h2>5. Limits, privacy and next steps</h2>
+<h3>Where it still fails</h3>
+<ul>
+  <li>About 13% of labelled workers are never found (small, hidden or in a crowd).</li>
+  <li>Hi-vis shirts and life jackets can pass as vests (no training photos of them yet).</li>
+  <li>Backlit or silhouetted workers can be wrongly flagged; they should be "needs review".</li>
+  <li>Faces narrower than about 48 pixels (typical in wide crowd shots) cannot be recognised, so those workers get a made-up name rather than a real one.</li>
+  <li>Not yet tested on real footage or a physical camera: the live camera (it was tested over a local HTTP video stream, which analysed 7 workers in a photo) and the spoken alerts. The falling-object and welding watches use motion and brightness rules and were checked only on test clips and synthetic frames. Goggles, gloves and boots use a second model whose accuracy has not been measured.</li>
+</ul>
+<h3>Privacy and fairness</h3>
+<ul>
+  <li>A catch never becomes a violation or a penalty without a supervisor's decision. The system only proposes penalties.</li>
+  <li>Face recognition needs the employee's agreement; only a numeric template is stored, never the photo. Made-up names belong to nobody and expire after 7 days. For real use, switch them off (<code>DUMMY_NAMES=0</code>). See docs/PRIVACY_NOTES.md (India's DPDP Act 2023).</li>
+  <li>Salaries, names and penalty amounts in the demo are made up. Whether wages can lawfully be reduced for a penalty is for HR and the company to confirm.</li>
+</ul>
+<h3>Next steps</h3>
+<ul>
+  <li>Hard-negative photos (hi-vis shirts, life jackets) and more small, distant workers; then retrain and re-measure.</li>
+  <li>Test the live camera and spoken alerts on real site footage.</li>
+  <li>Real accounts and passwords, consent and data retention, then host it (the three sites on a static host such as Vercel; the API and detector on a server).</li>
+</ul>
+
+<h2>6. How to run it</h2>
+<table>
+  <tr><th>Step</th><th>Command or address</th></tr>
+  <tr><td>Start everything</td><td><code>npm run start:all</code> in <code>siteguard-web</code> (API, three sites and the detector service)</td></tr>
+  <tr><td>Demo history (optional)</td><td><code>node api/src/seed.js --demo</code></td></tr>
+  <tr><td>Check it all works</td><td><code>npm run smoke</code> and <code>npm test</code>; in <code>ppe-detection</code>: <code>python -m pytest</code></td></tr>
+  <tr><td>Supervisor panel</td><td>http://localhost:3002 &nbsp; sign in <code>S001</code> / <code>123456789</code></td></tr>
+  <tr><td>Employee portal</td><td>http://localhost:3001 &nbsp; sign in <code>E001</code> / <code>123456789</code> (every demo account uses this password; E001 to E120, supervisors S001 to S003)</td></tr>
+  <tr><td>Demo desk</td><td>http://localhost:3003 &nbsp; (no sign-in; click "Turn on voice alerts" first)</td></tr>
+</table>
+
+<h2>7. Questions judges may ask</h2>
+<div class="qa">
+<h3>How accurate is it?</h3>
+<p>On 314 photos it never saw, the mean detection score is 0.876. For "no helmet" on 661 labelled workers, 91.8% of the people we flag really have none, and we flag or send to review 95.8% of those who do. We do not claim 99.99%; about 13% of workers are not found at all, and we say so.</p>
+<h3>What if a helmet is in the picture but not on that person?</h3>
+<p>Each helmet is assigned to exactly one worker by where it sits on the head. A helmet on one person, in a hand, or on a table does not cover anyone else. The zone rules and the "needs review" outcome are built for this.</p>
+<h3>Why not just flag everyone it is unsure about?</h3>
+<p>Accusing a person on weak evidence is unfair. Weak evidence goes to "needs review", and a second model double-checks every helmet call before it is sent on.</p>
+<h3>Can it punish someone wrongly?</h3>
+<p>It cannot punish anyone by itself. The system only proposes a penalty after three confirmed violations in 30 days; a supervisor must approve it, the employee can dispute it, and the amounts are examples that management sets.</p>
+<h3>How do you know who the person is if their face is hidden?</h3>
+<p>When the face is clear (48 px or wider) we match it to an enrolled employee, with consent. Clothes are a weak signal and used only under a very strict rule. Otherwise the person gets a made-up name for that footage, and the screens say the system does not know who they really are.</p>
+<h3>What stops the same person being punished many times in a day?</h3>
+<p>One violation per person per day. A repeat catch the same day only raises the catch count; the next day a new violation can be created.</p>
+<h3>What about privacy?</h3>
+<p>Only a numeric face template is stored, never the photo, and only after consent. Made-up identities expire after 7 days and can be cleared. A privacy note maps this to India's DPDP Act; real use needs a legal review.</p>
+<h3>What did you build yourselves, and what did you reuse?</h3>
+<p>The per-worker matching rules, the verdict logic, the object check, the cross-check, the penalty policy, the three websites and the API are ours. The detection model is a fine-tuned open-source YOLO11 and the face models are OpenCV's; all credited and licensed.</p>
+<h3>Does it work on live CCTV?</h3>
+<p>There is a live camera mode and a CCTV script that tracks people and sends violations to the supervisor. It is tested on video files and simulated sequences; it also ran correctly against a local HTTP video stream standing in for a phone camera, but we have not yet tested it on a physical camera or real site footage, and we say that openly.</p>
+<h3>What would you do with more time?</h3>
+<p>Collect hard-negative photos (hi-vis shirts, life jackets) and more small, distant workers, retrain and re-measure; test on real footage; add real accounts, consent and data-retention rules; and host it.</p>
+</div>
+
+</body>
+</html>

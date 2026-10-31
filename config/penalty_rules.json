@@ -1,0 +1,13 @@
+{
+  "_read_me": "EXAMPLE VALUES. Management sets the real ones. A penalty is only ever PROPOSED by the system. A supervisor must approve it before it is issued, and the worker can dispute it. Nothing here is a legal or HR policy.",
+  "window_days": 30,
+  "currency": "INR",
+  "worker": {
+    "propose_penalty_at": 3,
+    "penalty_amount": 500,
+    "escalate_to_authority_at": 5
+  },
+  "supervisor": {
+    "escalate_to_authority_at": 2
+  }
+}

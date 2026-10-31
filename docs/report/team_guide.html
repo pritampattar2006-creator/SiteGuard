@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>SiteGuard: team guide and judge Q&amp;A</title>
+<style>
+@page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+:root { --ink:#12202b; --orange:#ff6a13; --paper:#f5f1e8; --line:#e4dccb; --good:#1f8a5b; --warn:#d98a00; --bad:#d1332e; --grey:#5b6670; }
+* { box-sizing: border-box; }
+body { font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); font-size: 10.6pt; line-height: 1.45; margin: 0; }
+h1 { font-size: 24pt; margin: 0 0 2pt; } h2 { font-size: 15pt; margin: 20pt 0 6pt; border-bottom: 2px solid var(--orange); padding-bottom: 3pt; page-break-after: avoid; }
+h3 { font-size: 11.5pt; margin: 12pt 0 4pt; color: var(--orange); page-break-after: avoid; text-transform: uppercase; letter-spacing: .03em; }
+.sub { color: var(--grey); margin: 0 0 10pt; } p { margin: 4pt 0; } ul { margin: 3pt 0 3pt 16pt; padding: 0; } li { margin: 1.5pt 0; }
+table { border-collapse: collapse; width: 100%; margin: 6pt 0; font-size: 9.6pt; page-break-inside: auto; } tr { page-break-inside: avoid; }
+th { background: var(--ink); color: #fff; text-align: left; padding: 4pt 6pt; } td { border: 1px solid var(--line); padding: 4pt 6pt; vertical-align: top; }
+.tag { display: inline-block; padding: 0 6pt; border-radius: 8pt; color: #fff; font-size: 8.5pt; font-weight: 600; white-space: nowrap; }
+.ok { background: var(--good); } .lim { background: var(--warn); } .no { background: var(--bad); }
+.box { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--orange); padding: 6pt 9pt; margin: 6pt 0; page-break-inside: avoid; }
+.q { page-break-inside: avoid; margin: 7pt 0; } .q b { display: block; color: var(--ink); } .q span { display: block; margin-left: 10pt; color: #2b3a46; }
+.small { font-size: 9pt; color: var(--grey); } .never { border-left-color: var(--bad); } code { font-family: Consolas, monospace; font-size: 9.2pt; background: #efe9db; padding: 0 2pt; }
+.cover { background: var(--ink); color: #fff; padding: 18pt 18pt 14pt; margin-bottom: 10pt; } .cover .sub { color: #c8d0d6; } .cover h1 span { color: var(--orange); }
+</style></head><body>
+
+<div class="cover">
+<h1>Site<span>Guard</span>: team guide and judge Q&amp;A</h1>
+<p class="sub">PPE compliance detection for construction sites &nbsp;|&nbsp; Team HF27-0030 &nbsp;|&nbsp; KLS Vishwanathrao Deshpande Institute of Technology, Haliyal &nbsp;|&nbsp; Problem Statement 1, Computer Vision<br>Updated 31 October 2026. Everything below was run and checked; where something was not, it says so.</p>
+</div>
+
+<div class="box"><b>How to use this guide.</b> Read part 1 to part 4 once. Practise the pitch and the demo out loud. Then read part 6 (the judge questions) until you can answer each one in your own words, in two or three sentences. If you do not know something, say "we have not measured that", which is true and judges respect it. Part 7 lists what never to say.</div>
+
+<h2>1. The 60-second pitch</h2>
+<div class="box">"Supervisors cannot watch every worker on a busy site, so people without a helmet or vest get missed. SiteGuard looks at a photo, a video or a live camera, finds <b>every worker</b>, and decides <b>for each worker separately</b> whether they wear what their job requires. The key rule: a helmet anywhere in the picture never makes everyone compliant. Each helmet and vest is matched to the one worker wearing it. When the system is not sure, it says <b>needs review</b> and asks a person, instead of accusing someone. Anyone who broke a rule is sent to the supervisor with the picture, place, time and a written remark, and the employee sees it in their own feed. A person always makes the final decision, and a penalty is only ever <i>proposed</i> by the system. We measured it on photos it never saw: mean detection score 0.876, and 91.8% of the people we flag for no helmet really had none. We also tell you where it fails."</div>
+
+<h2>2. What is built and how well it works</h2>
+<p class="small">The three labels are: <span class="tag ok">WORKS, MEASURED</span> checked with numbers; <span class="tag lim">WORKS, LIMITED</span> works but with stated limits or only checked on test data; <span class="tag no">NOT BUILT</span> do not claim it.</p>
+<table>
+<tr><th style="width:27%">Feature</th><th style="width:15%">Status</th><th>What to know</th></tr>
+<tr><td>Per-worker helmet and vest verdict</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>Each item matched to one worker by position. Verdicts: compliant, violation (names the missing item), needs review. "No helmet" precision 0.918, recall 0.812 (0.958 counting "review") on 661 labelled workers.</td></tr>
+<tr><td>Detection of people, helmets, vests, bare heads</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>314 held-out photos: person 0.925, helmet 0.941, vest 0.901, head 0.736, mean 0.876 (AP at IoU 0.5). We re-ran this on 31 Oct.</td></tr>
+<tr><td>Dark photos</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>Brightening plus a night-trained model, used only when a picture is dark. "No helmet" precision 0.890 against 0.647 for the normal model alone. Tested on darkened copies of our test photos (synthetic).</td></tr>
+<tr><td>Missing vest</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>54 of 78 workers without a vest caught automatically (69%), 17 more sent to review.</td></tr>
+<tr><td>"Needs review" instead of accusing</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>Tiny, cut-off, crowded or backlit workers and weak evidence go to review. Backlit silhouettes: 5 of 5 test cases now go to review.</td></tr>
+<tr><td>Object check (a crane bucket is not a worker)</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>The bucket photo and clip are not flagged (2 of 2). The rate of wrongly rejecting real workers was not measured.</td></tr>
+<tr><td>Second-model cross-check on helmet calls</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>Held back 0 of 88 real violations and caught 2 of 6 false alarms. Small sample: say so.</td></tr>
+<tr><td>Photo and video (tracking, one report per violation, evidence picture)</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>A violation is confirmed only when it persists over several frames, then reported once with an evidence frame.</td></tr>
+<tr><td>Three web sites: supervisor panel, employee portal, demo desk</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>Sign-in, cases, remarks, alerts, salary view. A 20-check end-to-end smoke test passes against the running stack, plus 35 API tests.</td></tr>
+<tr><td>One violation per person per day; penalties and escalation</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>Repeat catch the same day only raises the count. Penalties are proposed, a supervisor approves, the worker can dispute. Amounts are examples.</td></tr>
+<tr><td>Streamlit app: Supervisor, Worker, Authority pages</td><td><span class="tag ok">WORKS, MEASURED</span></td><td>Trade-based required equipment, ten-rule library, challan-style tickets, supervisor oversight, analytics. All three pages load without errors.</td></tr>
+<tr><td>Naming people by face</td><td><span class="tag lim">WORKS, LIMITED</span></td><td>Only enrolled employees who consented. 160 clips of 4 people: no two people merged, 64 of 64 named observations right, about 20% left unnamed. Faces under about 48 px cannot be recognised. Clothes are a weak signal.</td></tr>
+<tr><td>Live camera</td><td><span class="tag lim">WORKS, LIMITED</span></td><td>Tested over a local HTTP video stream standing in for a phone camera: the feed went live and found 7 workers in a photo. Not yet tried with a physical camera.</td></tr>
+<tr><td>Worker-down alert</td><td><span class="tag lim">WORKS, LIMITED</span></td><td>The shape-based alert works on simulated sequences. The optional learned detector is weak: per clip, 53% of falls caught (24% in low light), 7% false alarms. It cannot say why someone is down.</td></tr>
+<tr><td>Falling-object and welding watches</td><td><span class="tag lim">WORKS, LIMITED</span></td><td>Motion and brightness rules, not trained models. Checked only on test clips and synthetic frames. Alerts only ask a person to look.</td></tr>
+<tr><td>Gloves, boots, goggles</td><td><span class="tag lim">WORKS, LIMITED</span></td><td>Logic and a second model exist; accuracy not measured.</td></tr>
+<tr><td>Hi-vis shirts and life jackets (look-alikes)</td><td><span class="tag no">NOT SOLVED</span></td><td>They can pass as vests. No labelled photos to train on.</td></tr>
+<tr><td>Respirator, ear protection, harness, restricted zones</td><td><span class="tag no">NOT BUILT</span></td><td>Defined as rules but not detectable, so never enforced.</td></tr>
+<tr><td>Login on the Streamlit app, data retention and deletion, hosting</td><td><span class="tag no">NOT BUILT</span></td><td>The web sites have demo sign-in (one shared demo password). Real accounts, consent notices and retention are "before real use".</td></tr>
+</table>
+
+<h2>3. Numbers to remember</h2>
+<table>
+<tr><th style="width:55%">Number</th><th>Meaning</th></tr>
+<tr><td><b>0.876</b></td><td>Mean detection score (mAP50) on 314 held-out photos. Person 0.925, helmet 0.941, vest 0.901, head 0.736.</td></tr>
+<tr><td><b>0.918 / 0.812 / 0.958</b></td><td>"No helmet" precision / recall / recall counting "review", on 661 labelled workers 60 px or taller.</td></tr>
+<tr><td><b>12.9%</b></td><td>Labelled workers the detector never found (85 of 661). Say this before a judge asks.</td></tr>
+<tr><td><b>0.890 vs 0.647</b></td><td>Dark photos: "no helmet" precision with the night model vs the normal model alone.</td></tr>
+<tr><td><b>69%</b></td><td>Workers without a vest caught automatically (54 of 78); 17 more sent to review.</td></tr>
+<tr><td><b>53% / 7%</b></td><td>Fall clips caught / normal clips falsely alerted (learned fall detector, experimental).</td></tr>
+<tr><td><b>3 in 30 days, 5, 2</b></td><td>Example policy: 3 violations in 30 days propose a penalty (example INR 500); 5 escalate a worker to the authority; 2 escalate a supervisor. Management sets the real values.</td></tr>
+<tr><td><b>255 + 35</b></td><td>Automatic tests: 255 Python, 35 API, plus a 20-check smoke test.</td></tr>
+<tr><td><b>3,115 photos</b></td><td>Training photos from two public sets: Construction-PPE 1,416 and CHVG 1,699.</td></tr>
+</table>
+
+<h2>4. The live demo (3 minutes)</h2>
+<p><b>Before you start:</b> in <code>siteguard-web</code> run <code>npm run start:all</code>. The addresses are: demo desk <code>http://localhost:3003</code>, supervisor panel <code>http://localhost:3002</code> (S001 / 123456789), employee portal <code>http://localhost:3001</code> (E001 / 123456789). Click "Turn on voice alerts" on the desk first. Rehearse once with the exact photos you will use. Optional: the Streamlit app, <code>streamlit run app.py</code>, shows the Supervisor, Worker and Authority pages.</p>
+<table>
+<tr><th style="width:11%">Time</th><th style="width:38%">Show</th><th>Say</th></tr>
+<tr><td>0:00</td><td>Demo desk, pick a sector (it shows the gear that sector requires)</td><td>"What each trade must wear comes from a config file the safety officer owns, not from our code."</td></tr>
+<tr><td>0:25</td><td>Upload a busy site photo</td><td>"Every worker gets their own box and verdict. The gear is matched to the person wearing it."</td></tr>
+<tr><td>0:55</td><td>The helmet-in-hand or on-a-table photo</td><td>"The helmet is in nobody's head zone, so it counts for nobody. A helmet anywhere in the picture does not clear everyone."</td></tr>
+<tr><td>1:20</td><td>A crowded or distant photo, then an amber "needs review" worker</td><td>"Where it cannot judge fairly it asks a person instead of accusing."</td></tr>
+<tr><td>1:45</td><td>Switch to the supervisor panel, open the new case</td><td>"The case arrived with the picture, place, time and a written remark the supervisor can edit. Nothing is a violation until a person confirms."</td></tr>
+<tr><td>2:15</td><td>Employee portal, E001's feed</td><td>"The employee sees it in their own feed, and a penalty is only proposed after three confirmed violations, then approved by a person."</td></tr>
+<tr><td>2:40</td><td>Show one honest failure (a hi-vis shirt taken for a vest, or a missed distant worker)</td><td>"This is where it still goes wrong, and what we would improve first."</td></tr>
+</table>
+
+<h2>5. Suggested split: who explains what</h2>
+<p class="small">Adjust to your team size. Every person should still be able to answer the basic questions in part 6.</p>
+<table>
+<tr><th style="width:22%">Part</th><th>Topics</th></tr>
+<tr><td>A. Problem and idea</td><td>The problem, the one-helmet-clears-everyone trap, the pitch, the three outcomes (green, red, amber).</td></tr>
+<tr><td>B. Detection and matching</td><td>The model, head and torso zones, one-to-one matching, dark photos, small workers, video tracking.</td></tr>
+<tr><td>C. Accuracy and honesty</td><td>The numbers, how they were measured, what failed, what was rejected, what is not claimed.</td></tr>
+<tr><td>D. System and penalties</td><td>The three sites, one violation a day, penalties and escalation, the human decision, privacy and naming.</td></tr>
+<tr><td>E. Demo and extras</td><td>Running the demo, live camera, worker-down, falling-object and welding watches, next steps.</td></tr>
+</table>
+
+<h2>6. Questions judges may ask, with answers</h2>
+
+<h3>A. The problem and the idea</h3>
+<div class="q"><b>What problem does this solve?</b><span>Supervisors cannot consistently spot workers without helmets or safety vests across busy areas. We check every worker automatically and say who is missing what.</span></div>
+<div class="q"><b>What is the input and the output?</b><span>Input: a photo, a video or a live camera stream. Output: the picture with a green, red or amber verdict per worker, a table, a violation summary, and a case sent to the supervisor with picture, place, time and remark.</span></div>
+<div class="q"><b>What is different about your approach?</b><span>We do not just detect a helmet; we check that it is on that worker's head, and each helmet or vest can belong to only one worker. A helmet elsewhere in the picture cannot clear everyone. We also have a third outcome, needs review, so we do not accuse people on weak evidence.</span></div>
+<div class="q"><b>Does it replace the supervisor?</b><span>No. It points the supervisor at likely violations. A person confirms every case, approves every penalty, and reviews every amber worker.</span></div>
+<div class="q"><b>Who would use it?</b><span>Safety supervisors on construction sites and factories, plus the authority above them, who see escalations and whether supervisors follow the rules too.</span></div>
+
+<h3>B. How it works</h3>
+<div class="q"><b>Walk us through the pipeline.</b><span>Brighten the picture if it is dark; detect people, helmets, vests and heads; match each item to a worker by body zone; judge each worker against what their trade requires; draw green, red or amber; summarise and send cases to the supervisor. Only the detection step uses the AI model. The matching, rules, penalties and web system are logic we wrote and tested.</span></div>
+<div class="q"><b>How do you know a helmet belongs to this worker?</b><span>Each worker has a head zone at the top of their box. A helmet counts only if its centre is in that zone and enough of it overlaps. Matching is one-to-one: once a helmet is given to one worker, it cannot count for anyone else. Vests must sit on the torso and be large enough.</span></div>
+<div class="q"><b>What if the helmet is in a hand or on a table?</b><span>It is outside every head zone, so nobody gets credit. The worker is flagged and the helmet is shown as unassigned. Unit tests with hand-made boxes cover this.</span></div>
+<div class="q"><b>What does "needs review" mean?</b><span>The system cannot judge fairly: the worker is tiny, cut off by the picture edge, crowded, a dark silhouette against bright light, or detected with low confidence. We ask a person instead of accusing someone wrongly.</span></div>
+<div class="q"><b>How do you tell a bare head from a missing detection?</b><span>"Missing" is inferred when no helmet is matched to the worker. We also trained a head class (bare or covered head) as extra evidence, so a cap or beanie is less likely to pass as a helmet. Its score is the lowest of the four classes (0.736), and we say so.</span></div>
+<div class="q"><b>How do you handle many workers, occlusion, distance and poor light?</b><span>Each worker is numbered and judged separately. Occluded, cropped or crowded workers become review. For distance we use a larger input size and zoomed tiles. Dark pictures are brightened and sent to a night-trained model. Hard cases still fail sometimes.</span></div>
+<div class="q"><b>How does video work?</b><span>Each person is tracked. A violation is confirmed only when it persists over several frames, then reported once with an evidence picture, so one bad frame cannot create a case.</span></div>
+<div class="q"><b>What is the object check?</b><span>A "person" box that holds no body, such as a crane's concrete bucket, is marked as an object and never flagged. We checked it on the bucket photo and clip. We did not measure how often it wrongly rejects a real worker.</span></div>
+<div class="q"><b>What is the second-model cross-check?</b><span>Before a "no helmet" call is sent on, a second model looks for a helmet on that worker. If it sees one, the call is held back for review. On our data it held back none of 88 real violations and caught 2 of 6 false alarms. That is a small sample.</span></div>
+
+<h3>C. Data and training</h3>
+<div class="q"><b>Where did your data come from?</b><span>Two public datasets, both credited: Construction-PPE (Ultralytics, 1,416 photos, AGPL-3.0) and CHVG (Ferdous and Ahsan 2022, 1,699 photos, CC BY 4.0). We did not collect photos ourselves.</span></div>
+<div class="q"><b>Did you train from scratch?</b><span>No. We fine-tuned a pretrained YOLO11 model. It already knew people and objects, so we taught it person, helmet, vest and head. This is called transfer learning and is why training took minutes to under an hour on a laptop GPU.</span></div>
+<div class="q"><b>Is about 3,000 photos not too small?</b><span>It is small, and we say so. Pretrained models need far less data, but more varied data, especially hard cases like hi-vis shirts and small distant workers, is our top next step.</span></div>
+<div class="q"><b>Why not a bigger model?</b><span>We tried YOLO11m. It scored 0.819 mean against 0.876 for our chosen model, so we did not use it. We also tried threshold tuning, test-time augmentation and an appearance-based tracker; none helped, so the defaults stayed.</span></div>
+<div class="q"><b>Could your test numbers be inflated?</b><span>Possibly. These datasets contain many near-identical frames, so scores can flatter a model. We kept a held-out test set the model never trained on. We also found that one extra open dataset was a 100% near-duplicate of photos we already had, so we could not use it as an independent test. Real-site footage would be the real test.</span></div>
+<div class="q"><b>What does mAP50 mean?</b><span>A score from 0 to 1 combining how many real objects we find and how well the boxes line up (a box counts as right if it overlaps the true box by at least half). Higher is better.</span></div>
+
+<h3>D. Accuracy</h3>
+<div class="q"><b>What is your accuracy?</b><span>On 314 photos the model never saw, the mean detection score is 0.876. For "no helmet" on 661 labelled workers, 91.8% of the people we flag really had no helmet, and we flag or send to review 95.8% of those who truly had none. About 13% of labelled workers are not found at all.</span></div>
+<div class="q"><b>Can you reach 99.99%?</b><span>No, and no honest detection system can promise that. We report what we measured with scripts anyone can re-run, and list the known gaps.</span></div>
+<div class="q"><b>What is the difference between precision and recall?</b><span>Precision: of the people we flag, how many really broke the rule (0.918). Recall: of the people who really broke the rule, how many we caught (0.812 automatically).</span></div>
+<div class="q"><b>How does it do in dark photos?</b><span>We darkened our test photos to simulate it. A night-trained model, used only when a picture is dark, cut false "no helmet" alarms from 36 to 8 (precision 0.890 against 0.647). The darkening is synthetic, so real night footage may differ.</span></div>
+<div class="q"><b>Can it tell a missing vest?</b><span>On 101 photos with vest ground truth, it caught 54 of 78 workers without a vest automatically (69%) and sent 17 more to review. It wrongly flagged 6 of 89 people who did wear one.</span></div>
+<div class="q"><b>How did you measure it?</b><span>With scripts in the project: <code>compare_models.py</code> for detection scores and <code>eval_workers.py</code> for per-worker verdicts, against the datasets' own labels on photos kept out of training. We re-ran the detection score on 31 October and it matched.</span></div>
+<div class="q"><b>Where does it fail?</b><span>Small, hidden or background workers can be missed (about 13%). Hi-vis shirts and life jackets can pass as vests. Backlit workers can be wrongly flagged, though most go to review. Faces under about 48 px cannot be recognised.</span></div>
+<div class="q"><b>Is it real-time?</b><span>The model itself takes about 13 ms per photo on our GPU, and the full pipeline with zoomed tiles took roughly 0.2 seconds per photo in our tests. The live camera analyses the newest frame about once a second. We have not benchmarked many cameras at once.</span></div>
+
+<h3>E. The system, penalties and fairness</h3>
+<div class="q"><b>What happens when someone is caught?</b><span>The case goes to the supervisor with the picture, place, time and a remark written from the facts. The employee sees it in their feed. It becomes a violation only when the supervisor confirms it. Only people who broke a rule are spoken to by name, at most once every 10 minutes.</span></div>
+<div class="q"><b>What stops the same person being punished many times in a day?</b><span>One violation per person per day. A repeat catch the same day only raises the catch count. The next day a new violation can be created.</span></div>
+<div class="q"><b>How do penalties work? Can it punish someone wrongly?</b><span>It cannot punish anyone by itself. In our example policy, three violations in 30 days propose a penalty (example INR 500). A supervisor must approve it, and the worker can dispute it. Five violations also escalate the worker to the authority. A dismissed violation never counts. All values are examples that management sets, and whether wages can lawfully be reduced is for HR and the company.</span></div>
+<div class="q"><b>Are supervisors held to the rules too?</b><span>Yes. In the Streamlit app, a supervisor's own missing PPE is tracked with no money penalty, and at 2 violations the case goes straight to the authority, who also see supervisor oversight.</span></div>
+<div class="q"><b>Why different equipment for different workers?</b><span>A welder, an electrician and a visitor need different gear. Required equipment per trade comes from <code>config/ppe_rules.json</code>, owned by the safety officer. Our starter values must be confirmed by a real safety officer; we did not invent safety standards.</span></div>
+<div class="q"><b>Why not flag everyone it is unsure about?</b><span>Accusing a person on weak evidence is unfair. Weak evidence goes to needs review, and a second model double-checks every helmet call.</span></div>
+
+<h3>F. Privacy and naming people</h3>
+<div class="q"><b>Does it recognise faces?</b><span>Only for employees who were told how face matching is used and agreed. Only a numeric face template is stored, never the photo, and removing a person deletes their templates. A face match only suggests a name; a supervisor confirms before anything is recorded.</span></div>
+<div class="q"><b>How do you name someone whose face is hidden?</b><span>When the face is clear (48 px or wider) we match it to an enrolled employee. Clothes are a weak signal, used only under a strict rule. Otherwise the person gets a made-up demo name tied to that footage, which belongs to nobody and expires. For real use, switch the made-up names off.</span></div>
+<div class="q"><b>What about privacy law?</b><span>We wrote privacy notes mapped to India's Digital Personal Data Protection Act 2023: purpose, consent for face templates, data kept on the local machine, and human review before any action. Real use needs notice, consent, retention rules and a legal review. We say these are not built yet.</span></div>
+<div class="q"><b>Is it secure? Is there a login?</b><span>The three web sites use sign-in, but the demo uses one shared demo password and made-up accounts. The Streamlit app has no login at all, so do not expose it to a network. Real accounts, encrypted storage and retention rules are required before real use.</span></div>
+
+<h3>G. Extra features and honest limits</h3>
+<div class="q"><b>What does the worker-down alert do?</b><span>It raises "someone should check" when a body goes flat and stays still. It cannot tell a heart attack from a trip or a falling object. The optional learned detector is weak: per clip it caught 53% of acted falls (24% in low light) with 7% false alarms, so it is off by default.</span></div>
+<div class="q"><b>Does it work on a live camera?</b><span>Yes, over a network video stream: a phone running an IP-camera app or a CCTV camera on the same network. We tested it against a local HTTP stream standing in for a phone, where it found 7 workers in a photo. We have not yet tried a physical camera or real site footage.</span></div>
+<div class="q"><b>What are the falling-object and welding watches?</b><span>There are no trained models for these. They use motion and brightness rules on a fixed camera, were checked only on test clips and synthetic frames, and only ask a person to look. They never create a violation or penalty.</span></div>
+<div class="q"><b>Can it detect gloves, boots and goggles?</b><span>The logic and a second model exist, but we have not measured their accuracy, so we do not claim it. Respirators, ear protection, harnesses and restricted zones are defined as rules but are not detectable yet.</span></div>
+<div class="q"><b>Can it prevent accidents?</b><span>No. It can say "worker down" and flag missing PPE, but it cannot see why someone fell or see an object falling on someone. An alert means someone should check now.</span></div>
+<div class="q"><b>Can it tell a visitor from a worker?</b><span>Not on its own. It treats every person it sees as a worker. A supervisor can set the trade (including visitor) that decides what gear is required.</span></div>
+
+<h3>H. Ownership, ethics and next steps</h3>
+<div class="q"><b>Who wrote what?</b><span>The design and logic are ours: the zones, one-to-one matching, the three outcomes, the penalty policy, the web system. We built the code with an AI coding assistant, Claude, then reviewed it, tested it on our own photos, and can explain every module. The YOLO detection model and the image and web libraries are open-source and credited.</span></div>
+<div class="q"><b>Did you copy other GitHub projects?</b><span>No. We read other open-source PPE projects for ideas and to learn what problems to solve. We wrote the code ourselves and did not copy any. Credits and licences are kept in the README and <code>docs/LICENSES_AND_SOURCES.md</code>.</span></div>
+<div class="q"><b>What licences apply?</b><span>YOLO11 and the Construction-PPE dataset are AGPL-3.0, CHVG is CC BY 4.0, GMDCSA24 is MIT, and the face models are MIT and Apache-2.0. AGPL means if you offer the software over a network you must make its source available, which matters for any commercial deployment.</span></div>
+<div class="q"><b>What would you do with more time?</b><span>Collect hard-negative photos (hi-vis shirts, life jackets) and more small, distant workers, then retrain and re-measure. Test on real footage and a physical camera. Add real accounts, consent and data-retention rules, and host it.</span></div>
+<div class="q"><b>What would it cost to deploy?</b><span>A site PC with a GPU for the detector, ordinary network cameras, and a server for the API and sites. We have not priced it, so we would not give a number.</span></div>
+<div class="q"><b>What is the biggest risk?</b><span>Wrongly accusing a worker. That is why weak evidence goes to review, why a second model checks helmet calls, and why nothing becomes a violation or penalty without a supervisor's decision.</span></div>
+
+<h2>7. What never to say</h2>
+<div class="box never">
+<ul>
+<li>Never say "99.99%" or "perfect". Say "0.876 mean detection score" and "91.8% precision for no helmet".</li>
+<li>Never say it identifies people by default. Faces are matched only for consented, enrolled employees; made-up names belong to nobody.</li>
+<li>Never say it works on real CCTV or a physical camera. It was tested on files, simulated sequences and a local stream.</li>
+<li>Never say the fall, falling-object or welding alerts are reliable. They are limited and only ask a person to look.</li>
+<li>Never say penalties are automatic or a company policy. The system only proposes; a supervisor approves; amounts are examples.</li>
+<li>Never say we wrote the YOLO model, or that no AI assistant helped. Fine-tuned open-source YOLO11, and an AI assistant helped; we directed, reviewed and tested.</li>
+<li>Never claim gloves, boots or goggles accuracy, or hi-vis look-alike handling.</li>
+</ul></div>
+
+<h2>8. Plain-words glossary</h2>
+<table>
+<tr><td style="width:24%"><b>YOLO</b></td><td>A family of fast AI models that find and box objects in a picture in one pass. We use YOLO11.</td></tr>
+<tr><td><b>Fine-tuning</b></td><td>Taking a model already trained on millions of pictures and teaching it our four classes with our photos.</td></tr>
+<tr><td><b>mAP50</b></td><td>A 0 to 1 score for how well the model finds objects and draws boxes. Higher is better.</td></tr>
+<tr><td><b>Precision / recall</b></td><td>Of those flagged, how many were right / of those that were real, how many were found.</td></tr>
+<tr><td><b>Head zone, torso zone</b></td><td>The parts of a worker's box where a helmet or vest must sit to count for that worker.</td></tr>
+<tr><td><b>One-to-one matching</b></td><td>Each helmet or vest is given to at most one worker.</td></tr>
+<tr><td><b>Needs review</b></td><td>The system could not judge fairly, so a person decides.</td></tr>
+<tr><td><b>Held-out photos</b></td><td>Photos kept away from training so the score shows how it does on pictures it never saw.</td></tr>
+<tr><td><b>Cross-check</b></td><td>A second model that double-checks a "no helmet" call before it is sent on.</td></tr>
+</table>
+
+<h2>9. Where things are</h2>
+<table>
+<tr><th style="width:36%">What</th><th>Where</th></tr>
+<tr><td>Measured results (re-runnable)</td><td><code>docs/ACCURACY_MEASURED.md</code>; scripts <code>compare_models.py</code>, <code>eval_workers.py</code></td></tr>
+<tr><td>What each module does</td><td><code>docs/MODULES.md</code></td></tr>
+<tr><td>Privacy, licences and credits</td><td><code>docs/PRIVACY_NOTES.md</code>, <code>docs/LICENSES_AND_SOURCES.md</code></td></tr>
+<tr><td>Final report and pitch deck</td><td><code>docs/SiteGuard_Final_Report_v2.pdf</code>, <code>docs/SiteGuard_Pitch_HF27-0030_v2.pptx</code></td></tr>
+<tr><td>Run tests and smoke test</td><td><code>python -m pytest</code> in <code>ppe-detection</code>; <code>npm test</code> and <code>npm run smoke</code> in <code>siteguard-web</code></td></tr>
+</table>
+</body></html>
