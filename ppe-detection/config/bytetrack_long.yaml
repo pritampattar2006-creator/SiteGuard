@@ -1,0 +1,9 @@
+# ByteTrack settings for SiteGuard video: remember a lost person for longer and start a new track less eagerly, so one person who is hidden for a
+# moment or flickers out of detection keeps the same number. (Ultralytics defaults: track_buffer 30, match_thresh 0.8, new_track_thresh 0.25.)
+tracker_type: bytetrack
+track_high_thresh: 0.3
+track_low_thresh: 0.1
+new_track_thresh: 0.4
+track_buffer: 120
+match_thresh: 0.9
+fuse_score: True

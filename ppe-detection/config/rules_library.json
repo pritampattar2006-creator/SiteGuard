@@ -1,0 +1,15 @@
+{
+  "_read_me": "The ten predefined rules. 'detectable' says whether SiteGuard can check it today. Rules marked false are defined so they can be switched on once a model or sensor exists; they are never enforced now. 'counts_towards_penalty' decides whether a violation of the rule counts towards the penalty rule in penalty_rules.json. Edit freely; confirm severities with your safety officer.",
+  "rules": [
+    {"id": "helmet",      "name": "Safety helmet",                    "item": "helmet",  "detectable": true,  "enabled": true,  "severity": "high",   "counts_towards_penalty": true,  "note": "Worn on the head, not carried or lying nearby"},
+    {"id": "vest",        "name": "High-visibility vest",             "item": "vest",    "detectable": true,  "enabled": true,  "severity": "medium", "counts_towards_penalty": true,  "note": "Worn on the torso"},
+    {"id": "boots",       "name": "Safety footwear",                  "item": "boots",   "detectable": true,  "enabled": true,  "severity": "medium", "counts_towards_penalty": true,  "note": "Needs the second model (weights/extras.pt)"},
+    {"id": "gloves",      "name": "Hand protection (gloves)",         "item": "gloves",  "detectable": true,  "enabled": true,  "severity": "medium", "counts_towards_penalty": true,  "note": "Needs the second model; per-item accuracy not yet measured"},
+    {"id": "goggles",     "name": "Eye protection (goggles)",         "item": "goggles", "detectable": true,  "enabled": true,  "severity": "medium", "counts_towards_penalty": true,  "note": "Needs the second model; small item, judged only on larger workers"},
+    {"id": "worker_down", "name": "Worker down (fall or collapse)",   "item": null,      "detectable": true,  "enabled": true,  "severity": "critical","counts_towards_penalty": false, "note": "An emergency alert, not a violation: nobody is penalised for falling. Video only"},
+    {"id": "respirator",  "name": "Respirator or mask in dust or fumes", "item": null,   "detectable": false, "enabled": false, "severity": "medium", "counts_towards_penalty": true,  "note": "Needs a model trained for it"},
+    {"id": "ear_defenders","name": "Ear protection near loud machinery","item": null,    "detectable": false, "enabled": false, "severity": "low",    "counts_towards_penalty": true,  "note": "Needs a model and a way to know where it is loud"},
+    {"id": "harness",     "name": "Safety harness when working at height","item": null,  "detectable": false, "enabled": false, "severity": "high",   "counts_towards_penalty": true,  "note": "Needs a model and a way to know the working height"},
+    {"id": "restricted_zone","name": "Entering a restricted zone",    "item": null,      "detectable": false, "enabled": false, "severity": "high",   "counts_towards_penalty": true,  "note": "Needs the zones drawn on each camera view"}
+  ]
+}

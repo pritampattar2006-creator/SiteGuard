@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.log
+.env
+# big or private: datasets, trained weights, run outputs, face templates, local databases
+data/
+weights/
+runs/
+outputs/
+*.db
+*.pt
+*.onnx

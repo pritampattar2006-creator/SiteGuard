@@ -1,0 +1,845 @@
+{
+  "_read_me": "Invented people for demos. Not real.",
+  "employees": [
+    {
+      "employeeId": "E001",
+      "name": "Vihaan Rathod",
+      "jobRole": "Welder",
+      "department": "Scaffolding",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E002",
+      "name": "Arjun Madar",
+      "jobRole": "Painter",
+      "department": "Finishing",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E003",
+      "name": "Rohan Shetty",
+      "jobRole": "Bar bender",
+      "department": "Electrical",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E004",
+      "name": "Kiran Bhat",
+      "jobRole": "Carpenter",
+      "department": "Rigging",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E005",
+      "name": "Suresh Gaonkar",
+      "jobRole": "Helper",
+      "department": "Plumbing",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E006",
+      "name": "Manoj Gowda",
+      "jobRole": "Crane operator",
+      "department": "Structure",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E007",
+      "name": "Deepak Mane",
+      "jobRole": "Electrician",
+      "department": "Civil",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E008",
+      "name": "Anil Chavan",
+      "jobRole": "Scaffolder",
+      "department": "Scaffolding",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E009",
+      "name": "Ramesh Pawar",
+      "jobRole": "Plumber",
+      "department": "Finishing",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E010",
+      "name": "Sanjay Joshi",
+      "jobRole": "Mason",
+      "department": "Electrical",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E011",
+      "name": "Mahesh Naik",
+      "jobRole": "Welder",
+      "department": "Rigging",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E012",
+      "name": "Prakash Jadhav",
+      "jobRole": "Painter",
+      "department": "Plumbing",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E013",
+      "name": "Nitin Shinde",
+      "jobRole": "Bar bender",
+      "department": "Structure",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E014",
+      "name": "Ganesh Patil",
+      "jobRole": "Carpenter",
+      "department": "Civil",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E015",
+      "name": "Ajay Kamble",
+      "jobRole": "Helper",
+      "department": "Scaffolding",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E016",
+      "name": "Vikram Khan",
+      "jobRole": "Crane operator",
+      "department": "Finishing",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E017",
+      "name": "Raju Desai",
+      "jobRole": "Electrician",
+      "department": "Electrical",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E018",
+      "name": "Santosh Hegde",
+      "jobRole": "Scaffolder",
+      "department": "Rigging",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E019",
+      "name": "Mohan D'Souza",
+      "jobRole": "Plumber",
+      "department": "Plumbing",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E020",
+      "name": "Imran Kulkarni",
+      "jobRole": "Mason",
+      "department": "Structure",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E021",
+      "name": "Farhan Rathod",
+      "jobRole": "Welder",
+      "department": "Civil",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E022",
+      "name": "Joseph Madar",
+      "jobRole": "Painter",
+      "department": "Scaffolding",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E023",
+      "name": "Basavaraj Shetty",
+      "jobRole": "Bar bender",
+      "department": "Finishing",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E024",
+      "name": "Aarav Bhat",
+      "jobRole": "Carpenter",
+      "department": "Electrical",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E025",
+      "name": "Vihaan Gaonkar",
+      "jobRole": "Helper",
+      "department": "Rigging",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E026",
+      "name": "Arjun Gowda",
+      "jobRole": "Crane operator",
+      "department": "Plumbing",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E027",
+      "name": "Rohan Mane",
+      "jobRole": "Electrician",
+      "department": "Structure",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E028",
+      "name": "Kiran Chavan",
+      "jobRole": "Scaffolder",
+      "department": "Civil",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E029",
+      "name": "Suresh Pawar",
+      "jobRole": "Plumber",
+      "department": "Scaffolding",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E030",
+      "name": "Manoj Joshi",
+      "jobRole": "Mason",
+      "department": "Finishing",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E031",
+      "name": "Deepak Naik",
+      "jobRole": "Welder",
+      "department": "Electrical",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E032",
+      "name": "Anil Jadhav",
+      "jobRole": "Painter",
+      "department": "Rigging",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E033",
+      "name": "Ramesh Shinde",
+      "jobRole": "Bar bender",
+      "department": "Plumbing",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E034",
+      "name": "Sanjay Patil",
+      "jobRole": "Carpenter",
+      "department": "Structure",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E035",
+      "name": "Mahesh Kamble",
+      "jobRole": "Helper",
+      "department": "Civil",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E036",
+      "name": "Prakash Khan",
+      "jobRole": "Crane operator",
+      "department": "Scaffolding",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E037",
+      "name": "Nitin Desai",
+      "jobRole": "Electrician",
+      "department": "Finishing",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E038",
+      "name": "Ganesh Hegde",
+      "jobRole": "Scaffolder",
+      "department": "Electrical",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E039",
+      "name": "Ajay D'Souza",
+      "jobRole": "Plumber",
+      "department": "Rigging",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E040",
+      "name": "Vikram Kulkarni",
+      "jobRole": "Mason",
+      "department": "Plumbing",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E041",
+      "name": "Raju Rathod",
+      "jobRole": "Welder",
+      "department": "Structure",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E042",
+      "name": "Santosh Madar",
+      "jobRole": "Painter",
+      "department": "Civil",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E043",
+      "name": "Mohan Shetty",
+      "jobRole": "Bar bender",
+      "department": "Scaffolding",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E044",
+      "name": "Imran Bhat",
+      "jobRole": "Carpenter",
+      "department": "Finishing",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E045",
+      "name": "Farhan Gaonkar",
+      "jobRole": "Helper",
+      "department": "Electrical",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E046",
+      "name": "Joseph Gowda",
+      "jobRole": "Crane operator",
+      "department": "Rigging",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E047",
+      "name": "Basavaraj Mane",
+      "jobRole": "Electrician",
+      "department": "Plumbing",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E048",
+      "name": "Aarav Chavan",
+      "jobRole": "Scaffolder",
+      "department": "Structure",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E049",
+      "name": "Vihaan Pawar",
+      "jobRole": "Plumber",
+      "department": "Civil",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E050",
+      "name": "Arjun Joshi",
+      "jobRole": "Mason",
+      "department": "Scaffolding",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E051",
+      "name": "Rohan Naik",
+      "jobRole": "Welder",
+      "department": "Finishing",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E052",
+      "name": "Kiran Jadhav",
+      "jobRole": "Painter",
+      "department": "Electrical",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E053",
+      "name": "Suresh Shinde",
+      "jobRole": "Bar bender",
+      "department": "Rigging",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E054",
+      "name": "Manoj Patil",
+      "jobRole": "Carpenter",
+      "department": "Plumbing",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E055",
+      "name": "Deepak Kamble",
+      "jobRole": "Helper",
+      "department": "Structure",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E056",
+      "name": "Anil Khan",
+      "jobRole": "Crane operator",
+      "department": "Civil",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E057",
+      "name": "Ramesh Desai",
+      "jobRole": "Electrician",
+      "department": "Scaffolding",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E058",
+      "name": "Sanjay Hegde",
+      "jobRole": "Scaffolder",
+      "department": "Finishing",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E059",
+      "name": "Mahesh D'Souza",
+      "jobRole": "Plumber",
+      "department": "Electrical",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E060",
+      "name": "Prakash Kulkarni",
+      "jobRole": "Mason",
+      "department": "Rigging",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E061",
+      "name": "Nitin Rathod",
+      "jobRole": "Welder",
+      "department": "Plumbing",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E062",
+      "name": "Ganesh Madar",
+      "jobRole": "Painter",
+      "department": "Structure",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E063",
+      "name": "Ajay Shetty",
+      "jobRole": "Bar bender",
+      "department": "Civil",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E064",
+      "name": "Vikram Bhat",
+      "jobRole": "Carpenter",
+      "department": "Scaffolding",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E065",
+      "name": "Raju Gaonkar",
+      "jobRole": "Helper",
+      "department": "Finishing",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E066",
+      "name": "Santosh Gowda",
+      "jobRole": "Crane operator",
+      "department": "Electrical",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E067",
+      "name": "Mohan Mane",
+      "jobRole": "Electrician",
+      "department": "Rigging",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E068",
+      "name": "Imran Chavan",
+      "jobRole": "Scaffolder",
+      "department": "Plumbing",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E069",
+      "name": "Farhan Pawar",
+      "jobRole": "Plumber",
+      "department": "Structure",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E070",
+      "name": "Joseph Joshi",
+      "jobRole": "Mason",
+      "department": "Civil",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E071",
+      "name": "Basavaraj Naik",
+      "jobRole": "Welder",
+      "department": "Scaffolding",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E072",
+      "name": "Aarav Jadhav",
+      "jobRole": "Painter",
+      "department": "Finishing",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E073",
+      "name": "Vihaan Shinde",
+      "jobRole": "Bar bender",
+      "department": "Electrical",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E074",
+      "name": "Arjun Patil",
+      "jobRole": "Carpenter",
+      "department": "Rigging",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E075",
+      "name": "Rohan Kamble",
+      "jobRole": "Helper",
+      "department": "Plumbing",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E076",
+      "name": "Kiran Khan",
+      "jobRole": "Crane operator",
+      "department": "Structure",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E077",
+      "name": "Suresh Desai",
+      "jobRole": "Electrician",
+      "department": "Civil",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E078",
+      "name": "Manoj Hegde",
+      "jobRole": "Scaffolder",
+      "department": "Scaffolding",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E079",
+      "name": "Deepak D'Souza",
+      "jobRole": "Plumber",
+      "department": "Finishing",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E080",
+      "name": "Anil Kulkarni",
+      "jobRole": "Mason",
+      "department": "Electrical",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E081",
+      "name": "Ramesh Rathod",
+      "jobRole": "Welder",
+      "department": "Rigging",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E082",
+      "name": "Sanjay Madar",
+      "jobRole": "Painter",
+      "department": "Plumbing",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E083",
+      "name": "Mahesh Shetty",
+      "jobRole": "Bar bender",
+      "department": "Structure",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E084",
+      "name": "Prakash Bhat",
+      "jobRole": "Carpenter",
+      "department": "Civil",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E085",
+      "name": "Nitin Gaonkar",
+      "jobRole": "Helper",
+      "department": "Scaffolding",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E086",
+      "name": "Ganesh Gowda",
+      "jobRole": "Crane operator",
+      "department": "Finishing",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E087",
+      "name": "Ajay Mane",
+      "jobRole": "Electrician",
+      "department": "Electrical",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E088",
+      "name": "Vikram Chavan",
+      "jobRole": "Scaffolder",
+      "department": "Rigging",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E089",
+      "name": "Raju Pawar",
+      "jobRole": "Plumber",
+      "department": "Plumbing",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E090",
+      "name": "Santosh Joshi",
+      "jobRole": "Mason",
+      "department": "Structure",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E091",
+      "name": "Mohan Naik",
+      "jobRole": "Welder",
+      "department": "Civil",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E092",
+      "name": "Imran Jadhav",
+      "jobRole": "Painter",
+      "department": "Scaffolding",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E093",
+      "name": "Farhan Shinde",
+      "jobRole": "Bar bender",
+      "department": "Finishing",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E094",
+      "name": "Joseph Patil",
+      "jobRole": "Carpenter",
+      "department": "Electrical",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E095",
+      "name": "Basavaraj Kamble",
+      "jobRole": "Helper",
+      "department": "Rigging",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E096",
+      "name": "Aarav Khan",
+      "jobRole": "Crane operator",
+      "department": "Plumbing",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E097",
+      "name": "Vihaan Desai",
+      "jobRole": "Electrician",
+      "department": "Structure",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E098",
+      "name": "Arjun Hegde",
+      "jobRole": "Scaffolder",
+      "department": "Civil",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E099",
+      "name": "Rohan D'Souza",
+      "jobRole": "Plumber",
+      "department": "Scaffolding",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E100",
+      "name": "Kiran Kulkarni",
+      "jobRole": "Mason",
+      "department": "Finishing",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E101",
+      "name": "Suresh Rathod",
+      "jobRole": "Welder",
+      "department": "Electrical",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E102",
+      "name": "Manoj Madar",
+      "jobRole": "Painter",
+      "department": "Rigging",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E103",
+      "name": "Deepak Shetty",
+      "jobRole": "Bar bender",
+      "department": "Plumbing",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E104",
+      "name": "Anil Bhat",
+      "jobRole": "Carpenter",
+      "department": "Structure",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E105",
+      "name": "Ramesh Gaonkar",
+      "jobRole": "Helper",
+      "department": "Civil",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E106",
+      "name": "Sanjay Gowda",
+      "jobRole": "Crane operator",
+      "department": "Scaffolding",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E107",
+      "name": "Mahesh Mane",
+      "jobRole": "Electrician",
+      "department": "Finishing",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E108",
+      "name": "Prakash Chavan",
+      "jobRole": "Scaffolder",
+      "department": "Electrical",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E109",
+      "name": "Nitin Pawar",
+      "jobRole": "Plumber",
+      "department": "Rigging",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E110",
+      "name": "Ganesh Joshi",
+      "jobRole": "Mason",
+      "department": "Plumbing",
+      "monthlySalary": 24000
+    },
+    {
+      "employeeId": "E111",
+      "name": "Ajay Naik",
+      "jobRole": "Welder",
+      "department": "Structure",
+      "monthlySalary": 30500
+    },
+    {
+      "employeeId": "E112",
+      "name": "Vikram Jadhav",
+      "jobRole": "Painter",
+      "department": "Civil",
+      "monthlySalary": 23000
+    },
+    {
+      "employeeId": "E113",
+      "name": "Raju Shinde",
+      "jobRole": "Bar bender",
+      "department": "Scaffolding",
+      "monthlySalary": 26500
+    },
+    {
+      "employeeId": "E114",
+      "name": "Santosh Patil",
+      "jobRole": "Carpenter",
+      "department": "Finishing",
+      "monthlySalary": 29000
+    },
+    {
+      "employeeId": "E115",
+      "name": "Mohan Kamble",
+      "jobRole": "Helper",
+      "department": "Electrical",
+      "monthlySalary": 18000
+    },
+    {
+      "employeeId": "E116",
+      "name": "Imran Khan",
+      "jobRole": "Crane operator",
+      "department": "Rigging",
+      "monthlySalary": 40500
+    },
+    {
+      "employeeId": "E117",
+      "name": "Farhan Desai",
+      "jobRole": "Electrician",
+      "department": "Plumbing",
+      "monthlySalary": 33000
+    },
+    {
+      "employeeId": "E118",
+      "name": "Joseph Hegde",
+      "jobRole": "Scaffolder",
+      "department": "Structure",
+      "monthlySalary": 27500
+    },
+    {
+      "employeeId": "E119",
+      "name": "Basavaraj D'Souza",
+      "jobRole": "Plumber",
+      "department": "Civil",
+      "monthlySalary": 30000
+    },
+    {
+      "employeeId": "E120",
+      "name": "Aarav Kulkarni",
+      "jobRole": "Mason",
+      "department": "Scaffolding",
+      "monthlySalary": 24000
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+image,group,worker,expected_status,expected_missing,expected_unassigned_helmets
+case_05.jpeg,easy,1,COMPLIANT,,0
+case_05.jpeg,easy,2,COMPLIANT,,0
