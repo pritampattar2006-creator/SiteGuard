@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.log
+.env
+.env.*
+api/data/
+api/uploads/
+.desk.bundle.mjs
+!.env.example

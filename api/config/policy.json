@@ -1,0 +1,8 @@
+{
+  "_read_me": "EXAMPLE VALUES. Management sets the real ones. A penalty is only ever PROPOSED by the system; a supervisor must approve it before it is issued, and the employee can dispute it.",
+  "windowDays": 30,
+  "proposeAt": 3,
+  "amount": 500,
+  "currency": "INR",
+  "timezoneOffsetMinutes": 330
+}
