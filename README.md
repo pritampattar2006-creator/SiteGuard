@@ -12,6 +12,7 @@ Built for hackathon HF27-0030.
 |---|---|---|
 | [`ppe-detection/`](ppe-detection) | Detection engine: people, helmets, vests, bare heads, gloves, boots, goggles; worker tracking; face and people registry; penalty rules; detector HTTP service (`:5000`) | Python, YOLO11, OpenCV, PyTorch, Streamlit |
 | [`siteguard-web/`](siteguard-web) | Web product: API (`:4000`), supervisor panel (`:3002`), employee portal (`:3001`) and demo desk (`:3003`) | Node, Express, React, Vite |
+| [`presentations/`](presentations) | Hackathon plan, final report, team guide with judge Q&A, and the pitch decks (the `_final_v3` deck is the latest) | PDF, PPTX |
 
 ## How it works
 
