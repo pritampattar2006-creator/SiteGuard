@@ -1,0 +1,27 @@
+{
+  "name": "siteguard-web",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "api",
+    "employee-site",
+    "supervisor-site",
+    "feed-site"
+  ],
+  "scripts": {
+    "api": "npm run start -w api",
+    "employee": "npm run dev -w employee-site",
+    "supervisor": "npm run dev -w supervisor-site",
+    "feed": "npm run dev -w feed-site",
+    "detector": "cd ../ppe-detection && .venv\\Scripts\\python.exe detector_service.py",
+    "start": "concurrently -k -n api,employee,supervisor,feed -c yellow,cyan,magenta,green \"npm run api\" \"npm run employee\" \"npm run supervisor\" \"npm run feed\"",
+    "seed": "npm run seed -w api",
+    "test": "npm test -w api",
+    "start:all": "concurrently -k -n api,employee,supervisor,desk,detector -c yellow,cyan,magenta,green,blue \"npm run api\" \"npm run employee\" \"npm run supervisor\" \"npm run feed\" \"npm run detector\"",
+    "smoke": "node scripts/smoke.mjs",
+    "api:dev": "npm run dev -w api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
