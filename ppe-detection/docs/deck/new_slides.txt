@@ -95,5 +95,5 @@ text(s, 6.85, 4.2, 5.6, 0.4, "NEXT STEPS", size=13, bold=True, color=GOOD, font=
 text(s, 6.85, 4.6, 5.6, 1.8, [(f"■  {l}", {"space_after": 4}) for l in ["Hard-negative photos (hi-vis shirts, life jackets)", "Test the live camera and spoken alerts on real footage",
                                                                               "Real accounts, consent and data retention before real use", "More photos of small and distant workers"]], size=13, color="3B4A56")
 notes(s, "Start with the stack so the judges know it is ordinary, reproducible code. Then say plainly where it fails. Naming our own weaknesses and the plan to fix them earns more trust than claiming it is perfect. "
-         "Credits: Ultralytics YOLO and the Construction-PPE dataset (AGPL-3.0), the CHVG dataset (CC BY 4.0), OpenCV's YuNet and SFace, and Claude as a coding assistant.")
+         "Credits: Ultralytics YOLO and the Construction-PPE dataset (AGPL-3.0), the CHVG dataset (CC BY 4.0), and OpenCV's YuNet and SFace.")
 

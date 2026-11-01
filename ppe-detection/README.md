@@ -75,4 +75,4 @@ head 0.736 (mean 0.876). The review was by one reviewer and is indicative, not a
 
 ## Licences and credits
 See `docs/LICENSES_AND_SOURCES.md`. Ultralytics YOLO11 and Construction-PPE (AGPL-3.0), CHVG (Ferdous and Ahsan, 2022, CC BY 4.0), GMDCSA24 (Alam et al., 2024, MIT), OpenCV, Streamlit, pandas, NumPy,
-scikit-learn, PyTorch, ReportLab, pytest. Other open-source PPE projects were read for ideas only; no code was copied. Written for this project with Claude (Anthropic) as a coding assistant; the team reviews the work.
+scikit-learn, PyTorch, ReportLab, pytest. Other open-source PPE projects were read for ideas only; no code was copied.
