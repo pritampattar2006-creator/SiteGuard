@@ -57,5 +57,3 @@ All names, salaries, penalty amounts and passwords in the demo are made up. The 
 ## Licences and credits
 
 Uses Ultralytics YOLO11 (AGPL-3.0), the Construction-PPE dataset (AGPL-3.0), CHVG (CC BY 4.0) and GMDCSA24 (MIT), plus OpenCV, PyTorch, Streamlit, ReportLab and others. Weights trained on these datasets inherit their terms. Full list: [`ppe-detection/docs/LICENSES_AND_SOURCES.md`](ppe-detection/docs/LICENSES_AND_SOURCES.md). No `LICENSE` file has been chosen for this repository yet.
-
-Written for this project with Claude (Anthropic) as a coding assistant; the team reviews the work.
